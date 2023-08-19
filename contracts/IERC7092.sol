@@ -7,6 +7,7 @@ pragma solidity ^0.8.0;
 interface IERC7092 {
     function isin() external view returns(string memory);
     function name() external view returns(string memory);
+    function symbol() external view returns(string memory);
     function currency() external view returns(address);
     function denomination() external view returns(uint256);
     function issueVolume() external view returns(uint256);

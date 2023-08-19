@@ -1,6 +1,10 @@
 .App {
-  margin-top: 20px;
+  margin-top: 0px;
+  padding-top: 20px;
+  padding-right: 50px;
   text-align: center;
+  background-color: #e7e7eb;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -37,4 +41,16 @@
 .header-name {
   text-align: right;
   margin-right: 10px;
+}
+
+.notification {
+  width: 150px;
+  height: 80px;
+  margin-right: 10px;
+  margin-left: auto;
+}
+
+.register-investor {
+  padding-left: 10%;
+  padding-bottom: 5%;
 }

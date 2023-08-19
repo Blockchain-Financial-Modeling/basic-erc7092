@@ -12,21 +12,22 @@ module.exports = async function (deployer, network, accounts) {
   let _issueDate = Math.round(Date.now() / 1000);
 
   let bond = {
-    isin: "FR601G7NB1L8",
-    name: "Peugeot 2030",
+    isin: "US601G7NB1L8",
+    name: "Tesla 2030",
+    symbol: "TSLA30",
     currency: erc20.address,
     denomination: 100,
     issueVolume: 1000,
-    couponRate: 100000,
+    couponRate: 750,
     issueDate: _issueDate,
     maturityDate: _issueDate + 600
   }
 
   let issuer = {
     accountAddress: ISSUER,
-    name: "Peugeot",
-    country: "France",
-    email: "info@peugeot.fr",
+    name: "Tesla",
+    country: "US",
+    email: "info@tesla.com",
     category: "CORP",
     creditRating: "AA-",
     carbonCredit: 1200

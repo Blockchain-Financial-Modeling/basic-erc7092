@@ -5,6 +5,7 @@ contract BondStorage {
     struct Bond {
         string isin;
         string name;
+        string symbol;
         address currency;
         uint256 denomination;
         uint256 issueVolume;
