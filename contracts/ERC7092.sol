@@ -31,7 +31,7 @@ contract ERC7092 is IERC7092, BondStorage {
     function register(address _investor, uint256 _amount) onlyBondManager external {
         address _issuer = issuer[bondISIN].accountAddress;
 
-        _investorsOffer.push(Offer({ investor: _investor, principal: _amount }));
+        _investorsOffer.push(Offer({ investor: _investor, principal: _amount / 1 ether }));
 
         IERC20(_bonds[bondISIN].currency).transferFrom(_investor, _issuer, _amount);
     }

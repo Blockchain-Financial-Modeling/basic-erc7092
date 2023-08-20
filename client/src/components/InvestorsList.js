@@ -33,8 +33,8 @@ function InvestorsList() {
         return (
             <TableRow key={index}>
                 <TableCell>{investor.investor}</TableCell>
-                <TableCell textAlign="right" warning>{Formate(investor.principal / 1e18)} {tokenSymbol}</TableCell>
-                <TableCell textAlign="right" positive>{Formate(bondBalances[index] / 1e18)} {bondSymbol}</TableCell>
+                <TableCell textAlign="right" warning>{Formate(investor.principal)} {tokenSymbol}</TableCell>
+                <TableCell textAlign="right" positive>{Formate(bondBalances[index])} {bondSymbol}</TableCell>
             </TableRow>
         );
     });
