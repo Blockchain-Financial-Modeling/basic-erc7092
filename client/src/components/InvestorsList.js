@@ -21,11 +21,20 @@ function InvestorsList() {
         return state.data.tokenSymbol;
     });
 
+    const bondSymbol = useSelector(state => {
+        return state.data.bondsSymbol;
+    });
+
+    const bondBalances = useSelector(state => {
+        return state.data.investorsBalances;
+    });
+
     const renderedInvestors = listOfInvestors.map((investor, index) => {
         return (
             <TableRow key={index}>
                 <TableCell>{investor.investor}</TableCell>
-                <TableCell textAlign="right">{Formate(investor.principal / 1e18)} {tokenSymbol}</TableCell>
+                <TableCell textAlign="right" warning>{Formate(investor.principal / 1e18)} {tokenSymbol}</TableCell>
+                <TableCell textAlign="right" positive>{Formate(bondBalances[index] / 1e18)} {bondSymbol}</TableCell>
             </TableRow>
         );
     });
@@ -43,7 +52,8 @@ function InvestorsList() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHeaderCell>address</TableHeaderCell>
-                                    <TableHeaderCell textAlign="right">Amount Invested</TableHeaderCell>
+                                    <TableHeaderCell textAlign="right">Principal</TableHeaderCell>
+                                    <TableHeaderCell textAlign="right">Balance</TableHeaderCell>
                                 </TableRow>
                                 
                             </TableHeader>

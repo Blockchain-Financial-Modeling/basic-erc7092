@@ -5,9 +5,11 @@ const dataSlice = createSlice({
     initialState: {
         loading: false,
         tokenSymbol: '',
+        bondsSymbol: '',
         bonds: [],
         usdcBalance: 0,
-        investors: []
+        investors: [],
+        investorsBalances: []
     },
     reducers: {
         setLoading(state, action) {
@@ -15,6 +17,9 @@ const dataSlice = createSlice({
         },
         setTokenSymbol(state, action) {
             state.tokenSymbol = action.payload;
+        },
+        setBondsSymbol(state, action) {
+            state.bondsSymbol = action.payload;
         },
         setBonds(state, action) {
             state.bonds = action.payload;
@@ -24,6 +29,9 @@ const dataSlice = createSlice({
         },
         setInvestors(state, action) {
             state.investors = action.payload;
+        },
+        setInvestorsBalances(state, action) {
+            state.investorsBalances = action.payload;
         }
     }
 });
@@ -31,8 +39,10 @@ const dataSlice = createSlice({
 export const {
     setLoading,
     setTokenSymbol,
+    setBondsSymbol,
     setBonds,
     setUSDCBalance,
-    setInvestors
+    setInvestors,
+    setInvestorsBalances
 } = dataSlice.actions;
 export const dataReducer = dataSlice.reducer;

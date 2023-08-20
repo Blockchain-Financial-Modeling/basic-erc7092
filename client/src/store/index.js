@@ -3,9 +3,11 @@ import {
     dataReducer,
     setLoading,
     setTokenSymbol,
+    setBondsSymbol,
     setBonds,
     setUSDCBalance,
-    setInvestors
+    setInvestors,
+    setInvestorsBalances
 } from './slices/dataSlice';
 
 const store = configureStore({
@@ -18,7 +20,9 @@ export {
     store,
     setLoading,
     setTokenSymbol,
+    setBondsSymbol,
     setBonds,
     setUSDCBalance,
-    setInvestors
+    setInvestors,
+    setInvestorsBalances
 };

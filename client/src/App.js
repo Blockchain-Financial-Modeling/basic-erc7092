@@ -14,7 +14,7 @@ import MintERC20 from "./components/MintERC20";
 import BondInformation from "./components/BondInformation";
 import InvestorsList from "./components/InvestorsList";
 import "./App.css";
-import { setBonds, setInvestors, setTokenSymbol, setUSDCBalance } from "./store";
+import { setBonds, setBondsSymbol, setInvestors, setInvestorsBalances, setTokenSymbol, setUSDCBalance } from "./store";
 import Formate from "./utils/Formate";
 
 function App() {
@@ -44,11 +44,25 @@ function App() {
 
     let bond = await erc7092.methods.getBondInfo().call({ from: account });
     let symbol = await erc20.methods.symbol().call({ from: account });
+    let bondSymbol = await erc7092.methods.symbol().call({ from: account });
     let listOfInvestors = await erc7092.methods.getListOfInvestorsOffer().call({ from: account });
+
+    let bondBalance = [];
+    for(let i = 0; i < listOfInvestors.length; i++) {
+      let _investor = listOfInvestors[i].investor;
+
+      let principal = await erc7092.methods.principalOf(_investor).call({ from: account });
+      let denomination = await erc7092.methods.denomination().call({ from: account });
+      let balance = principal / denomination;
+
+      bondBalance.push(balance);
+    }
 
     dispatch(setUSDCBalance(balance));
     dispatch(setInvestors(listOfInvestors));
+    dispatch(setInvestorsBalances(bondBalance));
     dispatch(setTokenSymbol(symbol));
+    dispatch(setBondsSymbol(bondSymbol));
     dispatch(setBonds(bond));
   });
 

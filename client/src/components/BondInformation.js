@@ -25,7 +25,7 @@ function BondInformation() {
         <div className="register-investor">
             <Card fluid>
                 <CardContent textAlign="left">
-                    <strong>Bond Information</strong>
+                    <strong>Bonds Information</strong>
                     <br></br>
                     <br></br>
                     {

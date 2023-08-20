@@ -31,11 +31,11 @@ function MintERC20() {
         <div className="register-investor">
             <Card fluid>
                 <CardContent textAlign="left">
-                    <strong>Get USDC</strong>
+                    <strong>Mint USDC</strong>
                     <br></br>
                     <br></br>
                     <Button primary fluid onClick={issue}>
-                        Get
+                        Mint
                     </Button>
                 </CardContent>
             </Card>

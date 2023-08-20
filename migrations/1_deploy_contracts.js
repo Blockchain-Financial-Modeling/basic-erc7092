@@ -13,11 +13,11 @@ module.exports = async function (deployer, network, accounts) {
 
   let bond = {
     isin: "US601G7NB1L8",
-    name: "Tesla 2030",
+    name: "TELSA 2030",
     symbol: "TSLA30",
     currency: erc20.address,
     denomination: 100,
-    issueVolume: 1000,
+    issueVolume: 10000,
     couponRate: 750,
     issueDate: _issueDate,
     maturityDate: _issueDate + 600
