@@ -1,5 +1,6 @@
 const ERC20 = artifacts.require("ERC20");
 const ERC7092 = artifacts.require("ERC7092");
+const CouponPayment = artifacts.require("CouponPayment");
 
 module.exports = async function (deployer, network, accounts) {
   let ISSUER = accounts[0];
@@ -13,11 +14,11 @@ module.exports = async function (deployer, network, accounts) {
 
   let bond = {
     isin: "US601G7NB1L8",
-    name: "TELSA 2030",
+    name: "TESLA 2030",
     symbol: "TSLA30",
     currency: erc20.address,
-    denomination: 100,
-    issueVolume: 10000,
+    denomination: 100000,
+    issueVolume: 10000000000,
     couponRate: 750,
     issueDate: _issueDate,
     maturityDate: _issueDate + 600
@@ -34,4 +35,15 @@ module.exports = async function (deployer, network, accounts) {
   }
 
   await deployer.deploy(ERC7092, bond, issuer);
+
+  // Deploy the CouponPayment contract
+  await deployer.deploy(
+    CouponPayment,
+    "Tesla",
+    10000000000,
+    100000,
+    750,
+    erc20.address
+  );
+  let couponPayment = await CouponPayment.deployed();
 };

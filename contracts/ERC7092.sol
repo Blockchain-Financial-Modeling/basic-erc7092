@@ -21,17 +21,24 @@ contract ERC7092 is IERC7092, BondStorage {
     }
 
     function issue() external onlyBondManager {
+        require(issued == 0, "ERC7092: ALREADY_ISSUED");
+
         _issue();
     }
 
     function redeem() external notLocked {
+        require(redeemed == 0, "ERC7092: ALREADY_REDEEMED");
+
         _redeem();
     }
 
     function register(address _investor, uint256 _amount) onlyBondManager external {
+        require(!isRegistered[_investor], "ERC7092: ALREADY_REGISTERED");
+
         address _issuer = issuer[bondISIN].accountAddress;
 
         _investorsOffer.push(Offer({ investor: _investor, principal: _amount / 1 ether }));
+        isRegistered[_investor] = true;
 
         IERC20(_bonds[bondISIN].currency).transferFrom(_investor, _issuer, _amount);
     }
@@ -152,6 +159,8 @@ contract ERC7092 is IERC7092, BondStorage {
 
         require(volume == _issueVolume, "ERC7092: INVALID_ISSUE_VOLUME");
 
+        issued == 1;
+
         emit BondIssued(_bonds[bondISIN], _investorsOffer);
     }
 
@@ -175,9 +184,9 @@ contract ERC7092 is IERC7092, BondStorage {
             }
         }
 
-        emit Redeemed();
+        redeemed == 1;
 
-        lock = 0;
+        emit Redeemed();
     }
 
     function _approve(address _owner, address _spender, uint256 _amount) internal virtual {
@@ -190,8 +199,10 @@ contract ERC7092 is IERC7092, BondStorage {
         uint256 _denomination = _bonds[bondISIN].denomination;
         uint256 _maturityDate = _bonds[bondISIN].maturityDate;
 
+        uint256 _balance = principal / _denomination;
+
         require(block.timestamp < _maturityDate, "ERC7092: BONDS_MATURED");
-        require(_amount <= principal, "ERC7092: INSUFFICIENT_BALANCE");
+        require(_amount <= _balance, "ERC7092: INSUFFICIENT_BALANCE");
         require((_amount * _denomination) % _denomination == 0, "ERC7092: INVALID_AMOUNT");
 
         _approvals[_owner][_spender]  = _approval + _amount;

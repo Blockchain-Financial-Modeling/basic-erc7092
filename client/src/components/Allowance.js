@@ -54,7 +54,7 @@ function Allowance() {
         <div className="register-investor">
             <Card fluid>
                 <CardContent textAlign="left">
-                    <strong>Allow the Manager to Manage your Assets</strong>
+                    <strong>Allow the Manager to Transfer your Assets</strong>
                     <br></br>
                     <br></br>
                     <Dropdown

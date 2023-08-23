@@ -2,6 +2,7 @@
   margin-top: 0px;
   padding-top: 20px;
   padding-right: 50px;
+  padding-left: 50px;
   text-align: center;
   background-color: #e7e7eb;
   min-height: 100vh;
@@ -9,38 +10,6 @@
 
 .App-logo {
   height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #09d3ac;
-}
-
-.send-eth {
-  padding-top: 50px;
-}
-
-.register {
-  width: 30%;
-  min-width: 300px;
-  max-width: 350px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.header-name {
-  text-align: right;
-  margin-right: 10px;
 }
 
 .notification {
@@ -51,6 +20,5 @@
 }
 
 .register-investor {
-  padding-left: 10%;
   padding-bottom: 5%;
 }

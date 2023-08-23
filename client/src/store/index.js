@@ -6,8 +6,11 @@ import {
     setBondsSymbol,
     setBonds,
     setUSDCBalance,
+    setPaymentBalance,
     setInvestors,
-    setInvestorsBalances
+    setInvestorsBalances,
+    setInterests,
+    setCoupons
 } from './slices/dataSlice';
 
 const store = configureStore({
@@ -23,6 +26,9 @@ export {
     setBondsSymbol,
     setBonds,
     setUSDCBalance,
+    setPaymentBalance,
     setInvestors,
-    setInvestorsBalances
+    setInvestorsBalances,
+    setInterests,
+    setCoupons
 };

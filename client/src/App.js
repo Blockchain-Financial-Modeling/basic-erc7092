@@ -4,7 +4,8 @@ import 'semantic-ui-css/semantic.min.css';
 import { Input, Button, Loader, Grid, GridRow, GridColumn } from "semantic-ui-react";
 import ERC20Instance from "./contracts/ERC20.json";
 import ERC7092Instance from "./contracts/ERC7092.json";
-import { web3Connection } from "./utils/web3Connection";
+import couponPaymentInstance from "./contracts/CouponPayment.json"
+;import { web3Connection } from "./utils/web3Connection";
 import { getContract } from "./utils/getContract";
 import RegisterInvestor from "./components/RegisterInvestor";
 import IssueBonds from "./components/IssueBonds";
@@ -13,8 +14,11 @@ import Allowance from "./components/Allowance";
 import MintERC20 from "./components/MintERC20";
 import BondInformation from "./components/BondInformation";
 import InvestorsList from "./components/InvestorsList";
+import CouponsList from "./components/CouponsList";
+import FundPaymentContract from "./components/FundPaymentContract";
+import AddInvestorsToPayment from "./components/AddInvestorsToPayment";
 import "./App.css";
-import { setBonds, setBondsSymbol, setInvestors, setInvestorsBalances, setTokenSymbol, setUSDCBalance } from "./store";
+import { setBonds, setBondsSymbol, setCoupons, setInterests, setInvestors, setInvestorsBalances, setPaymentBalance, setTokenSymbol, setUSDCBalance } from "./store";
 import Formate from "./utils/Formate";
 
 function App() {
@@ -38,9 +42,14 @@ function App() {
     let {web3, account} = await web3Connection();
     let erc20 = await getContract(web3, ERC20Instance);
     let erc7092 = await getContract(web3, ERC7092Instance);
+    let couponPayment = await getContract(web3, couponPaymentInstance);
 
     let balance = await erc20.methods.balanceOf(account).call({ from: account });
     balance = web3.utils.fromWei(balance);
+
+    let paymentBalance = await erc20.methods.balanceOf(couponPayment._address).call({ from: account });
+
+    let coupons = await couponPayment.methods.getListOfIntesrestsPaid().call({ from: account });
 
     let bond = await erc7092.methods.getBondInfo().call({ from: account });
     let symbol = await erc20.methods.symbol().call({ from: account });
@@ -48,19 +57,26 @@ function App() {
     let listOfInvestors = await erc7092.methods.getListOfInvestorsOffer().call({ from: account });
 
     let bondBalance = [];
+    let interests = [];
     for(let i = 0; i < listOfInvestors.length; i++) {
       let _investor = listOfInvestors[i].investor;
 
       let principal = await erc7092.methods.principalOf(_investor).call({ from: account });
       let denomination = await erc7092.methods.denomination().call({ from: account });
+      let couponRate = await erc7092.methods.couponRate().call({ from: account });
       let balance = principal / denomination;
+      let interest = principal * couponRate / 10000;
 
       bondBalance.push(balance);
+      interests.push(interest);
     }
 
     dispatch(setUSDCBalance(balance));
+    dispatch(setCoupons(coupons));
+    dispatch(setPaymentBalance(paymentBalance));
     dispatch(setInvestors(listOfInvestors));
     dispatch(setInvestorsBalances(bondBalance));
+    dispatch(setInterests(interests));
     dispatch(setTokenSymbol(symbol));
     dispatch(setBondsSymbol(bondSymbol));
     dispatch(setBonds(bond));
@@ -75,7 +91,7 @@ function App() {
       <Grid stackable columns={2}>
         <GridRow>
           <GridColumn textAlign="left">
-            <strong style={{ marginLeft: 50 }}>Balance: {Formate(usdcBalance)} USDC</strong>
+            <strong>Balance: {Formate(usdcBalance)} USDC</strong>
           </GridColumn>
           <GridColumn textAlign="right">
             <div className="notification">
@@ -94,10 +110,13 @@ function App() {
               <br></br>
               <MintERC20 />
               <Allowance />
+              <FundPaymentContract />
+              <AddInvestorsToPayment />
             </GridColumn>
             <GridColumn width={11}>
               <BondInformation />
               <InvestorsList />
+              <CouponsList />
             </GridColumn>
           </GridRow>
         </Grid>
